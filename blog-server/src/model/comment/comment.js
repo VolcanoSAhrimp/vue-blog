@@ -5,6 +5,7 @@ var moment = require("moment");
 const seq = require("../../db/seq");
 // 评论表
 const Comment = seq.define(
+  // 评论
   "blog_comment",
   {
     parent_id: {

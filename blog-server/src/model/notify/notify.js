@@ -5,6 +5,7 @@ var moment = require("moment");
 const seq = require("../../db/seq");
 
 const Message = seq.define(
+  // 通知
   "blog_notify",
   {
     message: {

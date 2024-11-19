@@ -5,6 +5,7 @@ var moment = require("moment");
 const seq = require("../../db/seq");
 
 const Chat = seq.define(
+  // 聊天
   "blog_chat",
   {
     user_id: {

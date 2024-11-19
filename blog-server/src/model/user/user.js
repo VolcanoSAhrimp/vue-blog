@@ -68,5 +68,6 @@ const User = seq.define(
 );
 
 // User.sync({ alter: true }); //创建数据表
+// 如果启用，它会根据模型定义同步数据库表结构，如果有新的字段或修改，会自动更新表结构。
 
 module.exports = User;

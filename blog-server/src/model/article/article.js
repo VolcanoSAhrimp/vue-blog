@@ -5,6 +5,7 @@ var moment = require("moment");
 const seq = require("../../db/seq");
 
 const Article = seq.define(
+  // 文章
   "blog_article",
   {
     article_title: {

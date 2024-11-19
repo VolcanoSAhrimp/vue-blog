@@ -5,6 +5,7 @@ var moment = require("moment");
 const seq = require("../../db/seq");
 
 const Links = seq.define(
+  // 连接
   "blog_links",
   {
     site_name: {

@@ -5,6 +5,7 @@ var moment = require("moment")
 const seq = require("../../db/seq")
 
 const PhotoAlbum = seq.define(
+  // 图片相册
   "blog_photo_album",
   {
     album_name: {

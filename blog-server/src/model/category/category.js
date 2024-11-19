@@ -5,6 +5,7 @@ var moment = require("moment")
 const seq = require("../../db/seq")
 
 const Category = seq.define(
+  // 种类
   "blog_category",
   {
     category_name: {
