@@ -12,16 +12,19 @@ import MusicPlayer from "@/components/Music/index";
 import BackTop from "@/components/BackTop/index";
 import ChatRoom from "@/components/ChatRoom/index";
 
+// 初始化用户存储和路由相关对象
 const userStore = user();
 const router = useRouter();
 const route = useRoute();
 const { getUserInfo } = storeToRefs(userStore);
+// 定义返回顶部组件的属性和设备类型判断变量
 const backTopProps = reactive({
   right: "",
   svgWidth: 0,
 });
 const isPc = ref(true);
 
+// 返回上一页的方法
 const goBack = () => {
   router.go(-1);
 };
@@ -40,29 +43,27 @@ const getAllPageHeaderBg = async () => {
   }
 };
 
+// 显示欢迎信息
 const welcome = () => {
-  // 欢迎
   let msg = getWelcomeSay(getUserInfo.value.nick_name);
   if (getUserInfo.value.id == 3) {
     msg = "小婷光临，真是三生有幸";
   }
   ElNotification({
     offset: 60,
-    title: "欢迎～",
+    title: "欢迎光临～～～",
     message: h("div", { style: "font-weight: 600;" }, msg),
   });
 };
 
+// 页面加载时执行的初始化操作
 onMounted(async () => {
-  // 首次判断是手机还是pc
   backTopProps.right = 0;
   backTopProps.svgWidth = 6;
   isPc.value = !isMobile();
 
-  // 上传访问量
   await addView();
   if (window.name == "") {
-    // 获取背景图片
     getAllPageHeaderBg();
     welcome();
   }
@@ -72,6 +73,7 @@ onMounted(async () => {
 <template>
   <div class="app">
     <router-view></router-view>
+    <!-- 根据路由路径和设备类型条件渲染组件 -->
     <BackTop
       v-if="route.path !== '/'"
       :right="backTopProps.right"
@@ -94,6 +96,7 @@ onMounted(async () => {
   box-sizing: border-box;
 }
 
+// 定义返回图标的位置和样式
 .icon-fanhui {
   position: fixed;
   left: 5px;

@@ -54,6 +54,7 @@ const initScrollEvent = () => {
 
 const getBgCover = computed(() => {
   const bgList = getPageHeaderList.value;
+  
   // 做一个根据路由来判断判断页面背景图片
   let url;
   let myUrl = "http://img.mrzym.top/FvmVKfygxBKoJbFVXJwzjgAASL9S";
@@ -88,7 +89,8 @@ onBeforeUnmount(() => {
 <template>
   <div id="home">
     <el-image class="bg !w-[100%] !h-[100%]" fit="cover" :src="getBgCover"></el-image>
-    <div class="font">小张的个人博客</div>
+    <!-- <ElImage class="bg !w-[100%] !h-[100%]" fit="cover" :src="getBgCover"></ElImage> -->
+    <div class="font">这里是lsp看涩图的地方！</div>
     <TypeWriter class="type-writer" size="1.2em" :typeList="saying"></TypeWriter>
     <Waves />
     <!-- <First /> -->

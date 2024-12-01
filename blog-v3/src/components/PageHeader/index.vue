@@ -32,7 +32,8 @@ const props = defineProps({
   photoAlbumList: {
     type: Array,
     default: () => {
-      [];
+      [
+      ];
     },
   },
 });
@@ -65,6 +66,7 @@ const addZero = (time) => {
 
 const getBgCover = computed(() => {
   const bgList = getPageHeaderList.value;
+
   // 做一个根据路由来判断判断页面背景图片
   let url;
   let myUrl = "http://img.mrzym.top/FvmVKfygxBKoJbFVXJwzjgAASL9S";

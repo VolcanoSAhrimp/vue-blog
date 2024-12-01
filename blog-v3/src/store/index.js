@@ -51,7 +51,8 @@ export const staticData = defineStore("staticData", {
       // 整体主题 黑夜和白天
       theme: isDark.value,
       // 头部图片地址
-      pageHeaderList: [],
+      pageHeaderList: [
+      ],
       messageTypeIsCard: false,
     };
   },

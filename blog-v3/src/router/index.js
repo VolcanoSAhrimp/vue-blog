@@ -8,12 +8,17 @@ import navPage from "@/views/index.vue";
 NProgress.configure({ showSpinner: false });
 const routes = [
   {
+    // 根路径
     path: "/",
+    // 给路由起一个名称，方便在其他地方引用
     name: "Nav",
+    // 添加元数据，通常用于存储额外的信息，如页面标题
     meta: {
       name: "导航",
     },
+    // 当访问此路由时，自动重定向到/home路径。
     redirect: "/home",
+    // 指定渲染的组件为navPage。
     component: navPage,
   },
   {

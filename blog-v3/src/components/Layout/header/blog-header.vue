@@ -97,7 +97,6 @@ onBeforeUnmount(() => {
   window.removeEventListener("scroll", scroll);
 });
 </script>
-
 <template>
   <div
     :class="['header_box', headerState.headerClass]"
@@ -105,12 +104,15 @@ onBeforeUnmount(() => {
       background: headerState.scrollTop < 50 ? 'transparent' : 'var(--header-bg)',
     }"
   >
+  <!-- 最顶端导航栏-开始 -->
     <div class="pc_menu flex_r_between">
       <div class="sub-avatar">
         <router-link v-if="getBlogAvatar" to="/"
           ><el-avatar class="el-avatar" :src="getBlogAvatar" />
         </router-link>
+        <!-- MessageBox -->
         <MessageBox class="ml-[10px]" v-if="getUserInfo.id" :user-id="getUserInfo.id" type="pc" />
+        <!-- MessageBox-sub -->
       </div>
       <div class="flex_r_around">
         <BlogSearch></BlogSearch>
@@ -166,9 +168,14 @@ onBeforeUnmount(() => {
             </el-sub-menu>
           </div>
         </el-menu>
+        <!-- SwitchTheme开始 -->
         <SwitchTheme />
+        <!-- SwitchTheme结束 -->
+         <Calculator /> 
       </div>
     </div>
+    <!-- 最顶端导航栏-结束 -->
+    <!-- 左边菜单-默认隐藏-开始 -->
     <div class="mobile_menu flex_r_between">
       <div class="flex items-center">
         <span class="iconfont icon-menu2" @click="headerState.drawerShow = true"> </span>
@@ -183,12 +190,12 @@ onBeforeUnmount(() => {
       <div class="flex_r_between">
         <BlogSearch></BlogSearch>
         <el-drawer
-          style="background: #484848"
+          style="background: #484899"
           v-model="headerState.drawerShow"
           direction="ltr"
           :before-close="handleClose"
           :append-to-body="true"
-          size="60%"
+          size="40%"
           :z-index="9999"
         >
           <div class="flex justify-center items-center">
@@ -223,7 +230,7 @@ onBeforeUnmount(() => {
               >
             </el-sub-menu>
             <el-menu-item index="/category"><i class="iconfont icon-sort"></i> 分类</el-menu-item>
-            <el-menu-item index="/tag"><i class="iconfont icon-label_fill"></i> 标签</el-menu-item>
+            <!-- <el-menu-item index="/tag"><i class="iconfont icon-label_fill"></i> 标签</el-menu-item> -->
             <el-menu-item index="/photoAlbum"
               ><i class="iconfont icon-paper"></i> 相册</el-menu-item
             >
@@ -248,8 +255,11 @@ onBeforeUnmount(() => {
         <SwitchTheme />
       </div>
     </div>
+    <!-- 左边菜单-默认隐藏-结束 -->
   </div>
+  <!-- 弹出登录-开始 -->
   <Login />
+  <!-- 弹出登录-结束 -->
 </template>
 
 <style lang="scss" scoped>

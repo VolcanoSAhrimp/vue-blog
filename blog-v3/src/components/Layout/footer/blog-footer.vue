@@ -5,7 +5,7 @@
     class="footer_box flex flex-col items-center justify-center"
   >
     <!-- eslint-disable-next-line -->
-    <div class="footer-color">&copy 小张的博客 2023</div>
+    <div class="footer-color">&copy 小张的博客 {{ currentTime }}</div>
     <a class="footer-color change-color mt-[5px]" href="http://beian.miit.gov.cn/" target="_blank"
       >蜀ICP备2023007772号</a
     >
@@ -39,8 +39,19 @@
 </template>
 
 <script setup>
+import { ref,onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
+const currentTime =ref(new Date().toLocaleString());
+// 设置定时器每秒更新时间
+const timer = setInterval(() => {
+  currentTime.value = new Date().toLocaleString();
+}, 1000);
+
+// 在组件卸载前清理定时器
+onBeforeUnmount(() => {
+  clearInterval(timer);
+});
 </script>
 
 <style lang="scss" scoped>

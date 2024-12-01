@@ -22,6 +22,9 @@ export const addView = () => {
 export const getAllPageHeader = () => {
   return new Promise((resolve, reject) => {
     http.get("/api/pageHeader/getAll", {}).then((res) => {
+      console.log("这里是res");
+      
+      console.log(res);
       resolve(res);
     });
   });

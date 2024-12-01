@@ -70,6 +70,12 @@ const scroll = debounce(() => {
   }
 }, 10);
 
+/**
+ * 平滑滚动到页面顶部
+ * 
+ * 该函数使用window.scrollTo方法，以平滑的方式滚动页面到顶部，即滚动位置为0
+ * 主要用于改善用户体验，当用户需要返回页面顶部时，可以通过该函数实现平滑滚动，而非突跳
+ */
 const scrollToTop = () => {
   window.scrollTo({
     top: 0,
