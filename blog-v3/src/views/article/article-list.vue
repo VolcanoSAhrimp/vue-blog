@@ -23,26 +23,43 @@ let param = reactive({
 let total = ref(0); // 记录总数
 let layout = "prev, pager, next"; //分页组件会展示的功能项
 
+/** 当前页码*/ 
 const pagination = (page) => {
   param.current = page.current;
   getArticleListById();
 };
-
+/** 根据id进行文章跳转*/ 
 const gotoDetail = (id) => {
   router.push({ path: "/article", query: { id } });
 };
 
+/**
+ * 根据文章ID获取文章列表
+ * 此函数用于根据不同的条件获取文章列表，条件可以是标签（tag）或类别（category）
+ * 它通过调用不同的API来获取数据，并在成功后更新文章列表和总数
+ */
 const getArticleListById = async () => {
+  // 声明一个变量来存储API响应结果
   let res;
+  // 在请求数据前设置加载状态为true
   loading.value = true;
+  
+  // 根据当前类型判断是按标签还是按类别获取文章列表
   if (currentType.value == "tag") {
+    // 如果是按标签获取，调用相应的API
     res = await getArticleListByTagId(param);
   } else {
+    // 如果是按类别获取，调用相应的API
     res = await getArticleListByCategoryId(param);
   }
+  
+  // 检查API响应状态码，0表示成功
   if (res.code == 0) {
+    // 更新文章列表数据
     articleList.value = res.result.list;
+    // 更新文章总数
     total.value = res.result.total;
+    // 在数据更新后设置加载状态为false
     loading.value = false;
   }
 };

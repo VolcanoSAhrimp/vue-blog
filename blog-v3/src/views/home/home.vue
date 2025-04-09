@@ -56,8 +56,12 @@ let tags = ref([]);
 const getConfigDetail = async () => {
   try {
     let res = await homeGetConfig();
+    
     if (res.code == 0 && typeof res.result != "string") {
       configDetail.value = res.result;
+
+      // console.log(configDetail.value);
+      
       userStore.setBlogAvatar(res.result.blog_avatar);
       calcRuntimeDays(configDetail.value.createdAt);
     }
@@ -121,7 +125,9 @@ onMounted(async () => {
   <PageHeader />
   <div class="home_center_box">
     <el-row>
-      <el-col :xs="24" :sm="18">
+      
+      <el-col :xs="24" :sm="18"> 
+        <!-- 手机顶部文章-分类-标签-开始 -->
         <el-card
           class="mobile-top-card mobile-card info-card animate__animated animate__fadeIn"
           shadow="hover"
@@ -135,6 +141,7 @@ onMounted(async () => {
             </template>
           </el-skeleton>
         </el-card>
+        <!-- 手机顶部文章-分类-标签-结束 -->
         <!-- 博客文章 -->
         <HomeArticleList
           :articleList="articleList"
@@ -142,6 +149,7 @@ onMounted(async () => {
           :articleTotal="articleTotal"
           @pageChange="pagination"
         ></HomeArticleList>
+        <!-- 移动端网站咨询 -->
         <el-card
           class="mobile-bottom-card card-hover mobile-card info-card animate__animated animate__fadeIn"
           shadow="hover"
@@ -202,49 +210,13 @@ onMounted(async () => {
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="group">
-                    支持作者
-                    <div class="flex justify-end items-start flex-nowrap">
-                      <div v-image="configDetail.ali_pay">
-                        <el-image
-                          class="img"
-                          :src="configDetail.ali_pay"
-                          fit="cover"
-                          :preview-src-list="[configDetail.ali_pay]"
-                          preview-teleported
-                          lazy
-                        >
-                          <template #error>
-                            <div class="w-[100%] h-[100%] grid place-items-center">
-                              <svg-icon name="image404" :width="4" :height="4"></svg-icon>
-                            </div>
-                          </template>
-                        </el-image>
-                      </div>
-                      <div v-image="configDetail.we_chat_pay">
-                        <el-image
-                          class="img !ml-[10px]"
-                          :src="configDetail.we_chat_pay"
-                          fit="cover"
-                          :preview-src-list="[configDetail.we_chat_pay]"
-                          preview-teleported
-                          lazy
-                        >
-                          <template #error>
-                            <div class="w-[100%] h-[100%] grid place-items-center">
-                              <svg-icon name="image404" :width="4" :height="4"></svg-icon>
-                            </div>
-                          </template>
-                        </el-image>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
               </RightSideItem>
             </template>
           </el-skeleton>
         </el-card>
       </el-col>
+      <!-- 右边信息栏 -->
       <el-col :xs="0" :sm="6">
         <!-- 博客我的信息 -->
         <RightSide

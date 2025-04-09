@@ -3,26 +3,53 @@ import { reqMusicDetail, reqMusicDescription, reqMusicLyricById } from "@/api/mu
 export const musicKey = "blog-music-player";
 
 // 转码
+/**
+ * Base64编码和解码工具类
+ */
 export const Base64 = {
+  /**
+   * 将给定的字符串进行Base64编码
+   * @param {string} v 待编码的字符串
+   * @returns {string} 编码后的Base64字符串
+   */
   encode: function (v) {
+    // 使用window.btoa对URI编码的字符串进行Base64编码
     return window.btoa(window.encodeURIComponent(v));
   },
+
+  /**
+   * 将给定的Base64编码字符串进行解码
+   * @param {string} v 编码后的Base64字符串
+   * @returns {string} 解码后的原始字符串
+   */
   decode: function (v) {
+    // 使用window.atob对Base64编码的字符串进行解码，然后对结果进行URI解码
     return window.decodeURIComponent(window.atob(v));
   },
 };
 
+/**
+ * 将键值对存储到本地存储中，并对键和值进行编码
+ * 
+ * @param {string} key - 要存储的数据的键
+ * @param {*} value - 要的数据的存储值
+ * @returns {void | string} - 如果键无效或值为空，则返回相应值，否则无返回
+ */
 export const _setLocalItem = function (key, value) {
   try {
+    // 检查键是否为空或未定义，如果是，则不执行任何操作
     if (key === "" || key === undefined) {
       return;
     }
+    // 当键存在时，根据值的不同情况处理
     if (key) {
+      // 如果值为0，将其转换为字符串并编码，然后存储键（值将默认为null）
       if (value == 0) {
         value = JSON.stringify(value);
         localStorage.setItem(Base64.encode(key));
         return;
       }
+      // 如果值为null、未定义或空字符串，则返回空字符串
       if (value === null || value === undefined || value === "") {
         return "";
       }
@@ -34,21 +61,37 @@ export const _setLocalItem = function (key, value) {
     console.error(err);
   }
 };
+
+/**
+ * 从本地存储中获取指定键的值
+ * 此函数旨在从本地存储中读取与给定键关联的值，并将其解码和解析为JavaScript对象
+ * 它首先检查提供的键是否有效，然后尝试从本地存储中获取与该键关联的值
+ * 如果值存在，则对其进行Base64解码，然后解析为JSON对象，以确保数据的完整性和安全性
+ * 
+ * @param {string} key - 要从本地存储中获取的项的键
+ * @returns {any} - 解析后的JavaScript对象，如果键无效或值不存在，则返回空字符串
+ */
 export const _getLocalItem = function (key) {
   try {
+    // 检查键是否为空或无效
     if (key === null || key === "" || key === undefined) {
       return "";
     }
+    // 如果键有效，尝试从本地存储中获取值
     if (key) {
       let value = localStorage.getItem(Base64.encode(key));
+      // 检查获取的值是否为空或不存在
       if (value === null || value === undefined || value === "") {
         return "";
       } else {
+        // 对值进行Base64解码
         value = Base64.decode(value);
+        // 解析解码后的值为JavaScript对象并返回
         return JSON.parse(value);
       }
     }
   } catch (err) {
+    // 如果发生错误，记录错误信息
     console.error(err);
   }
 };

@@ -65,6 +65,7 @@ const goToArticle = (article) => {
           class="my-timeline-item border-orange"
         >
           <div class="flex_r_start timeline">
+           <!-- 图片 -->
             <div class="timeline-cover scale" v-image="article.article_cover">
               <el-image
                 class="w-[100%] h-[100%]"
@@ -77,6 +78,7 @@ const goToArticle = (article) => {
                 </template>
               </el-image>
             </div>
+            <!-- 文本 -->
             <div class="timeline-info" @click="goToArticle(article)">
               <div class="timeline-info__title">
                 {{ article.article_title }}

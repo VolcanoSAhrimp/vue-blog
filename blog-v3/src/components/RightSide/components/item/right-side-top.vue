@@ -16,25 +16,32 @@ defineProps({
 });
 
 /* operate start */
+// 执行导航操作
 const operate = (op, val) => {
   switch (op) {
     case "goToCategory":
+      // 导航到分类页面
       router.push("/category");
       break;
     case "goToTag":
+      // 导航到标签页面
       router.push("/tag");
       break;
     case "goToArchives":
+      // 导航到归档页面
       router.push("/archives");
       break;
     case "openLink":
+      // 在新窗口中打开链接
       window.open(val);
       break;
   }
 };
 </script>
 <template>
+  <!-- 背景 -->
   <div class="info-background" v-image="configDetail.avatar_bg">
+    <!-- src本体，:preview-src-list预览图片 -->
     <el-image
       fit="cover"
       style="width: 100%; height: 100%"
@@ -49,11 +56,14 @@ const operate = (op, val) => {
       </template>
     </el-image>
   </div>
+  <!-- 头像 -->
   <div class="info-avatar">
-    <router-link to="/"><el-avatar :src="configDetail.blog_avatar || avatar" /> </router-link>
+    <router-link to="/"><el-avatar :src="configDetail.blog_avatar || avatar"/> </router-link>
     <span class="blog-name">{{ configDetail.blog_name }} </span>
   </div>
+  <!-- 自我介绍 -->
   <div class="personal-say">{{ configDetail.personal_say }}</div>
+  <!-- 菜单 -->
   <div class="common-menu flex_r_between">
     <span class="flex_c_center" @click="operate('goToArchives')">
       <span class="common-menu__label to_pointer">文章</span>
@@ -74,6 +84,7 @@ const operate = (op, val) => {
       </span>
     </span>
   </div>
+  <!-- gitee -->
   <div class="git-ee flex_r_around">
     <span
       class="git-ee__item button-animated"
@@ -83,6 +94,7 @@ const operate = (op, val) => {
       <span class="git-ee__item-text"> My Gitee</span>
     </span>
   </div>
+  <!-- 各类通讯网址跳转 -->
   <div class="personal-link flex_r_around">
     <i
       class="iconfont icon-bilibili-line to_pointer"
@@ -92,13 +104,14 @@ const operate = (op, val) => {
       class="iconfont icon-github-fill to_pointer"
       @click="operate('openLink', configDetail.github_link)"
     ></i>
-
+    <!-- 微信 -->
     <el-popover placement="top" trigger="hover">
-      <el-image style="width: 100%; height: 100%" :src="configDetail.we_chat_link"></el-image>
       <template #reference>
         <i class="iconfont icon-weixin1 to_pointer"></i>
       </template>
+      <el-image style="width: 100%; height: 100%" :src="configDetail.we_chat_link"></el-image>
     </el-popover>
+    <!-- QQ -->
     <el-popover placement="top" trigger="hover">
       <el-image style="width: 100%; height: 100%" :src="configDetail.qq_link"></el-image>
       <template #reference>

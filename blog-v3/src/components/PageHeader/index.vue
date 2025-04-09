@@ -102,9 +102,11 @@ watch(
 <template>
   <!-- 其实不同的路由通过插槽来做会好一些 之前没考虑到这么多复杂的情况 -->
   <HomeHeader class="!w-[100%] !h-[100vh]" v-if="route.path == '/home'" />
+  <!-- 开始 -->
   <div v-else class="page-header" :style="getBgCover">
     <div v-if="route.path == '/article'" class="article main-article">
       <div class="loading" v-image="props.article.article_cover"></div>
+      <!-- Tooltip -->  
       <Tooltip
         width="80%"
         weight="500"

@@ -17,7 +17,7 @@ const props = defineProps({
   // 打印一个字的时间长度
   wordPrintTime: {
     type: Number,
-    default: 0.3,
+    default: 0.1,
   },
   color: {
     type: String,

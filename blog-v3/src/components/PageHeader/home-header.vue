@@ -37,9 +37,10 @@ const scrollListener = debounce(() => {
     showScrollBottom.value = true;
   }
 }, 50);
-
+// 笑话文本
 const initOneSentence = async () => {
-  fetch("https://api.vvhan.com/api/ian/rand?type=json")
+  // fetch("https://api.vvhan.com/api/ian/rand?type=json")
+  fetch("https://api.vvhan.com/api/text/joke?type=json")
     .then((res) => res.json())
     .then((res) => {
       if (res.success) {
@@ -84,16 +85,29 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", scrollListener);
 });
+const currentTime = ref(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+// 设置定时器每秒更新时间
+const timer = setInterval(() => {
+  currentTime.value= new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}, 1000);
+
+// 在组件卸载前清理定时器
+onBeforeUnmount(() => {
+  clearInterval(timer);
+});
 </script>
 
 <template>
   <div id="home">
     <el-image class="bg !w-[100%] !h-[100%]" fit="cover" :src="getBgCover"></el-image>
     <!-- <ElImage class="bg !w-[100%] !h-[100%]" fit="cover" :src="getBgCover"></ElImage> -->
-    <div class="font">这里是lsp看涩图的地方！</div>
+    <div class="font">{{ currentTime }}</div>
+    <!-- 至理名言-开始 -->
     <TypeWriter class="type-writer" size="1.2em" :typeList="saying"></TypeWriter>
+    <!-- 至理名言-结束 -->
+     <!-- 波纹动画 -->
     <Waves />
-    <!-- <First /> -->
+    <!-- 滚动底部 -->
     <div v-if="showScrollBottom" class="scroll-bottom">
       <i @click="scrollToBottom" class="iconfont icon-arrowdown"></i>
     </div>
@@ -154,6 +168,7 @@ onBeforeUnmount(() => {
   color: var(--global-white);
   padding: 0.5rem;
   cursor: pointer;
+  font-size: 16vw;
 }
 .font:hover {
   animation: anime 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) alternate forwards;

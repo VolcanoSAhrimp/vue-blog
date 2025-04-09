@@ -13,6 +13,12 @@ import useMusic from "./useMusic.js";
 
 import { useRoute } from "vue-router";
 
+/**
+ * 定义一个音乐播放器组件
+ * 
+ * 该组件用于在应用程序中播放音乐它可能包含音乐播放、暂停、
+ * 调整音量等功能组件名称为"MusicPlayer"
+ */
 defineComponent({
   name: "MusicPlayer",
 });

@@ -8,6 +8,8 @@ import viteCompression from "vite-plugin-compression"; // gzip压缩
 import { resolve } from "path";
 import requireTransform from "vite-plugin-require-transform"; // 支持require
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons"; // 支持svg
+import  Icons  from "unplugin-icons/vite";
+import  IconsResolver  from "unplugin-icons/resolver";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -30,12 +32,17 @@ export default defineConfig({
     commonjs(),
     // 自动导入element plus组件
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver(),
+        IconsResolver(),
+      ],
     }),
     Components({
       dts: true,
       dirs: "src/components",
-      resolvers: [ElementPlusResolver()], // ElementPlus按需加载
+      resolvers: [ElementPlusResolver(),
+        IconsResolver({enabledCollecttions: ["ep"]}),
+      ], // ElementPlus按需加载
     }),
     viteCompression({
       verbose: true, // 默认即可
@@ -53,6 +60,9 @@ export default defineConfig({
     createSvgIconsPlugin({
       // Specify the icon folder to be cached
       iconDirs: [resolve(process.cwd(), "src/icons/svg")],
+    }),
+    Icons({
+      autoInstall: true,
     }),
   ],
   css: {

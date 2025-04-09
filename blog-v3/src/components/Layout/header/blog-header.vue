@@ -8,7 +8,6 @@ import MessageBox from "@/components/MessageBox/message-box.vue";
 import SwitchTheme from "@/components/SwitchTheme/index.vue";
 import Login from "./login/login.vue";
 import { debounce } from "@/utils/tool";
-
 const router = useRouter();
 const route = useRoute();
 const userStore = user();
@@ -171,7 +170,7 @@ onBeforeUnmount(() => {
         <!-- SwitchTheme开始 -->
         <SwitchTheme />
         <!-- SwitchTheme结束 -->
-         <Calculator /> 
+         <!-- <Calculator />  -->
       </div>
     </div>
     <!-- 最顶端导航栏-结束 -->

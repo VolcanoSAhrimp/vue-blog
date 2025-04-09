@@ -12,20 +12,25 @@ import GsapCount from "@/components/GsapCount/index";
 import { gsapTransY } from "@/utils/transform";
 import { isMobile } from "@/utils/tool";
 
+// 定义 emit 函数以发出自定义事件 "pageChange"
 const emit = defineEmits(["pageChange"]);
 
+// 父传子
 const props = defineProps({
   articleList: {
     type: Array,
-    default: () => {},
+    default: () => { },
   },
   articleTotal: {
     type: Number,
     default: 0,
   },
+  // current 当前页
+  // size 每页条目数
+  // loading加载
   param: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 
@@ -48,11 +53,12 @@ const operate = (type, item) => {
 /* 文章操作 end */
 
 let layout = " prev, pager, next"; //分页组件会展示的功能项
-
+// 子传父
 const pagination = (page) => {
   emit("pageChange", page);
 };
 
+// 页面刷新的时候PC除了第一个,其它都是从下到上的移动动画，移动端则全部都有移动动画
 watch(
   () => props.articleList,
   () => {
@@ -61,13 +67,21 @@ watch(
       let listArticle = [];
       for (let i = 0; i < props.articleList.length; i++) {
         if (!isMobile()) {
+          // 非移动端
+          // console.log("非移动端");
           if (i >= 1) {
             listArticle.push(".article" + i);
           }
+          // console.log(listArticle);
+
         } else {
+          // 移动端
+          // console.log("移动端");
           listArticle.push(".article" + i);
+
         }
       }
+      // 页面刷新的时候除了第一个,其它都是从下到上的移动动画
       gsapTransY(listArticle, 30, 0.3, "none");
     });
   }
@@ -76,6 +90,7 @@ watch(
 
 <template>
   <el-row class="root">
+    <!-- 如果要加载才启用 -->
     <template v-if="param.loading">
       <el-col v-for="item in 5" :key="item">
         <el-card class="card-hover">
@@ -89,29 +104,19 @@ watch(
         </el-card>
       </el-col>
     </template>
+    <!-- 这里开始才是文章本体，也就是正文 -->
     <template v-else>
       <template v-if="articleList.length">
-        <el-col
-          :class="['article-col', 'article' + index]"
-          v-for="(item, index) in articleList"
-          :key="item.id"
-        >
+        <el-col v-for="(item, index) in articleList" :class="['article-col', 'article' + index]" :key="item.id">
           <el-card class="card-hover">
-            <div
-              class="article-box"
-              :style="{
-                'flex-direction': index % 2 == 0 ? 'row' : 'row-reverse',
-              }"
-            >
-              <div
-                :class="['article-cover', 'article-cover' + index]"
-                @click="operate('detail', item)"
-              >
-                <div
-                  v-image="item.article_cover"
-                  class="scale flex justify-center items-center"
-                  style="width: 100%; height: 100%"
-                >
+            
+            <div class="article-box" :style="{
+              'flex-direction': index % 2 == 0 ? 'row' : 'row-reverse',
+            }">
+            <!-- 图片 -->
+              <div :class="['article-cover', 'article-cover' + index]" @click="operate('detail', item)">
+                <div v-image="item.article_cover" class="scale flex justify-center items-center"
+                  style="width: 100%; height: 100%">
                   <el-image :src="item.article_cover" fit="cover" class="image">
                     <template #error>
                       <svg-icon name="image404" :width="15" :height="15"></svg-icon>
@@ -121,11 +126,8 @@ watch(
               </div>
               <!-- 信息 -->
               <div class="article-info flex_c_between">
-                <span
-                  class="title text_overflow"
-                  :title="item.article_title"
-                  @click="operate('detail', item)"
-                >
+                <!-- 卡片内标题 -->
+                <span class="title text_overflow" :title="item.article_title" @click="operate('detail', item)">
                   {{ item.article_title }}
                 </span>
                 <div class="meta">
@@ -133,6 +135,7 @@ watch(
                     <i class="iconfont icon-zhiding"></i>
                     <span class="meta-label">置顶</span>
                   </span>
+                  <!-- 分隔栏-置顶 -->
                   <span v-if="item.is_top == 1" class="article-meta__separator"></span>
                   <span class="to_pointer">
                     <i class="iconfont icon-calendar2"></i>
@@ -150,24 +153,19 @@ watch(
                     <span class="meta-value">{{ item.categoryName }}</span>
                   </span>
                   <span class="article-meta__separator"></span>
+                  <!-- 标签 -->
                   <span class="to_pointer" @click="operate('tag', item)">
                     <i class="iconfont icon-label_fill"></i>
-                    <span
-                      class="meta-value"
-                      v-for="(tagName, index) in item.tagNameList"
-                      :key="index"
-                    >
+                    <span class="meta-value" v-for="(tagName, index) in item.tagNameList" :key="index">
                       {{ index == item.tagNameList.length - 1 ? tagName : tagName + "、" }}
                     </span>
                   </span>
                   <span class="article-meta__separator"></span>
+                  <!-- 点赞 -->
                   <span class="to_pointer">
                     <i class="iconfont icon-icon1"></i>
-                    <GsapCount
-                      class="meta-value"
-                      v-if="item.thumbs_up_times - 0 < 1000"
-                      :value="numberFormate(item.thumbs_up_times)"
-                    />
+                    <GsapCount class="meta-value" v-if="item.thumbs_up_times - 0 < 1000"
+                      :value="numberFormate(item.thumbs_up_times)" />
                     <span v-else class="meta-value">
                       {{ numberFormate(item.thumbs_up_times) }}
                     </span>
@@ -175,26 +173,16 @@ watch(
                   <span class="article-meta__separator"></span>
                   <span class="to_pointer">
                     <i class="iconfont icon-chakan"></i>
-                    <GsapCount
-                      class="meta-value"
-                      v-if="item.view_times - 0 < 1000"
-                      :value="numberFormate(item.view_times)"
-                    />
+                    <GsapCount class="meta-value" v-if="item.view_times - 0 < 1000"
+                      :value="numberFormate(item.view_times)" />
                     <span v-else class="meta-value">
                       {{ numberFormate(item.view_times) }}
                     </span>
                   </span>
                 </div>
-                <Tooltip
-                  width="100%"
-                  size="1.2rem"
-                  align="left"
-                  :lineHeight="3"
-                  :name="item.article_description"
-                />
+                <Tooltip width="100%" size="1.2rem" align="left" :lineHeight="3" :name="item.article_description" />
               </div>
             </div>
-            <!-- 图片 -->
           </el-card>
         </el-col>
       </template>
@@ -202,14 +190,8 @@ watch(
         <div class="no-article">暂无文章，请先到后台发布文章～</div>
       </template>
     </template>
-    <Pagination
-      class="!mt-[2rem]"
-      :size="param.size"
-      :current="param.current"
-      :layout="layout"
-      :total="articleTotal"
-      @pagination="pagination"
-    />
+    <Pagination class="!mt-[2rem]" :size="param.size" :current="param.current" :layout="layout" :total="articleTotal"
+      @pagination="pagination" />
   </el-row>
 </template>
 
@@ -236,6 +218,7 @@ watch(
 
 .article-info {
   flex: 1;
+
   .title {
     display: inline-block;
     width: 100%;

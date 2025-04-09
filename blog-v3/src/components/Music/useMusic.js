@@ -322,7 +322,7 @@ function useMusic() {
 
   const state = reactive({
     volume: 0.5, // 音量
-    isPaused: true, // 音乐播放器是否暂停
+    isPaused: true, //  音乐播放器是否暂停
     currentTime: 0, // 当前播放的时间
     duration: 0, // 歌曲总时长
     musicInfo: {
@@ -409,6 +409,15 @@ function computedGetters(getters, store) {
   return computedGetters;
 }
 
+/**
+ * 初始化状态对象
+ * 
+ * 将给定的数据对象的属性复制到状态对象中，用于初始化状态
+ * 此函数不返回任何值，而是直接修改传入的状态对象
+ * 
+ * @param {Object} state - 要初始化的状态对象
+ * @param {Object} data - 包含要复制的属性的数据对象
+ */
 function initState(state, data) {
   Object.assign(state, data);
 }

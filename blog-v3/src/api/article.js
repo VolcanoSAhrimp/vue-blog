@@ -12,7 +12,8 @@ export const homeGetArticleList = (current, size) => {
 /** 时间轴 */
 export const blogTimelineGetArticleList = (current, size) => {
   return new Promise((resolve, reject) => {
-    http.get(`/api/article/blogTimelineGetArticleList/${current}/${size}`, {}).then((res) => {
+    http.get(`/api/article/blogTimelineGetArticleList/${current}/${size}`, {})
+    .then((res) => {
       resolve(res);
     });
   });
